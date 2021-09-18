@@ -11,4 +11,6 @@ int main() {
 	v3.insert(121);
 	v3.insert(167);
 	v3.insert(188);
+
+	v3.remove(0, 100);
 }

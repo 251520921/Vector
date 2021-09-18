@@ -50,7 +50,7 @@ void Vector<T>::shrink() {
 	if (_capacity >> 1 < DEFAULT_CAPACITY) return;
 	if (_capacity >> 2 < _size) return;
 	T* oldElem = _elem;
-	_elem = new T[_capacity >> 1];
+	_elem = new T[_capacity >>= 1];
 	for (int i = 0; i < _size; i++)
 		_elem[i] = oldElem[i];
 	delete[] oldElem;
