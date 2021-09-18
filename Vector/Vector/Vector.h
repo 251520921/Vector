@@ -10,6 +10,8 @@ private:
 
 private:
 	void copyFrom(T const* A, Rank lo, Rank hi);		//∏¥÷∆ππ‘Ï
+	void expand();
+	void shrink();
 public:
 	Vector(int s = 0, int c = 0, T const& e = NULL);
 	Vector(T const* A, Rank lo, Rank hi);
@@ -25,6 +27,28 @@ void Vector<T>::copyFrom(T const* A, Rank lo, Rank hi) {
 	_elem = new T[_capacity = (hi - lo) << 1];
 	for (_size = 0; lo < hi; _size++, lo++)
 		_elem[_size] = A[lo];
+}
+
+template<class T>
+void Vector<T>::expand() {
+	if (_size < _capacity) return;
+	if (_capacity < DEFAULT_CAPACITY) _capacity = DEFAULT_CAPACITY;
+	T* oldElem = _elem;
+	_elem = new T[_capacity <<= 1];
+	for (int i = 0; i < _size; i++)
+		_elem[i] = oldElem[i];
+	delete[] oldElem;
+}
+
+template<class T>
+void Vector<T>::shrink() {
+	if (_capacity >> 1 < DEFAULT_CAPACITY) return;
+	if (_capacity >> 2 < _size) return;
+	T* oldElem = _elem;
+	_elem = new T[_capacity >> 1];
+	for (int i = 0; i < _size; i++)
+		_elem[i] = oldElem[i];
+	delete[] oldElem;
 }
 
 template<class T>
