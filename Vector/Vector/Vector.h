@@ -22,6 +22,8 @@ public:
 
 	Rank insert(T const& e, Rank r);	//插入一个数据
 	Rank insert(T const& e);
+	int remove(Rank lo, Rank hi);
+	T remove(Rank r);
 };
 
 template<class T>
@@ -101,4 +103,23 @@ Rank Vector<T>::insert(T const& e, Rank r) {
 template<class T>
 Rank Vector<T>::insert(T const& e) {
 	return insert(e, _size);
+}
+
+template<class T>
+int Vector<T>::remove(Rank lo, Rank hi) {
+	if (lo == hi) return 0;
+	if (hi > _size) hi = _size;
+	while (hi < _size)
+		_elem[lo++] = _elem[hi++];
+	_size = lo;
+	shrink();
+	return hi - lo;
+}
+
+template<class T>
+T Vector<T>::remove(Rank r) {
+	assert(r < _size);
+	T t = _elem[r];
+	remove(r, r + 1);
+	return t;
 }
