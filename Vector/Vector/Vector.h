@@ -100,5 +100,5 @@ Rank Vector<T>::insert(T const& e, Rank r) {
 
 template<class T>
 Rank Vector<T>::insert(T const& e) {
-	insert(e, _size);
+	return insert(e, _size);
 }
