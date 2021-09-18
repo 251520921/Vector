@@ -13,12 +13,15 @@ private:
 	void expand();
 	void shrink();
 public:
-	Vector(int s = 0, int c = 0, T const& e = NULL);
+	Vector(int s = 0, int c = DEFAULT_CAPACITY, T const& e = NULL);
 	Vector(T const* A, Rank lo, Rank hi);
 	Vector(T const* A, Rank n);
 	Vector(Vector<T> const& V, Rank lo, Rank hi);
 	Vector(Vector<T> const& V);
 	~Vector();
+
+	Rank insert(T const& e, Rank r);	//插入一个数据
+	Rank insert(T const& e);
 };
 
 template<class T>
@@ -76,10 +79,26 @@ Vector<T>::Vector(Vector<T> const& V, Rank lo, Rank hi) {
 
 template<class T>
 Vector<T>::Vector(Vector<T> const& V) {
-	copyFrom(V._elem, 0, _size);
+	copyFrom(V._elem, 0, V._size);
 }
 
 template<class T>
 Vector<T>::~Vector() {
 	delete[] _elem;
+}
+
+template<class T>
+Rank Vector<T>::insert(T const& e, Rank r) {
+	assert(r >= 0 && r <= _size);
+	expand();
+	for (int i = _size; i > r; i--)
+		_elem[i] = _elem[i - 1];
+	_elem[r] = e;
+	_size++;
+	return r;
+}
+
+template<class T>
+Rank Vector<T>::insert(T const& e) {
+	insert(e, _size);
 }
