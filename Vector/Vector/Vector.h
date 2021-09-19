@@ -24,6 +24,11 @@ public:
 	Rank insert(T const& e);
 	int remove(Rank lo, Rank hi);
 	T remove(Rank r);
+
+	Vector<T>& operator=(Vector<T> const& rhs);
+	T& operator[](Rank r);
+	operator T* () const;
+
 };
 
 template<class T>
@@ -122,4 +127,21 @@ T Vector<T>::remove(Rank r) {
 	T t = _elem[r];
 	remove(r, r + 1);
 	return t;
+}
+
+template<class T>
+Vector<T>& Vector<T>::operator=(Vector<T> const& rhs) {
+	if (_elem) delete[] _elem;
+	copyFrom(rhs._elem, 0, rhs._size);
+	return *this;
+}
+
+template<class T>
+T& Vector<T>::operator[](Rank r) {
+	return _elem[r];
+}
+
+template<class T>
+Vector<T>::operator T* () const {
+	return _elem;
 }
