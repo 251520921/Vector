@@ -12,6 +12,8 @@ private:
 	void copyFrom(T const* A, Rank lo, Rank hi);		//复制构造
 	void expand();
 	void shrink();
+	Rank bubble(Rank lo, Rank hi);
+
 public:
 	Vector(int s = 0, int c = DEFAULT_CAPACITY, T const& e = NULL);
 	Vector(T const* A, Rank lo, Rank hi);
@@ -32,6 +34,9 @@ public:
 	//无序向量
 	Rank find(T const& e, Rank lo, Rank hi) const;
 	Rank find(T const& e) const;
+	//排序
+	void bubbleSort(Rank lo, Rank hi);
+	void bubbleSort();
 };
 
 template<class T>
@@ -62,6 +67,17 @@ void Vector<T>::shrink() {
 	for (int i = 0; i < _size; i++)
 		_elem[i] = oldElem[i];
 	delete[] oldElem;
+}
+
+template<class T>
+Rank Vector<T>::bubble(Rank lo, Rank hi) {
+	Rank last = lo;
+	while (++lo < hi)
+		if (_elem[lo - 1] > _elem[lo]) {
+			last = lo;
+			std::swap(_elem[lo - 1], _elem[lo]);//main函数里包含了iosteram
+		}
+	return last;
 }
 
 template<class T>
@@ -160,4 +176,14 @@ Rank Vector<T>::find(T const& e, Rank lo, Rank hi) const {
 template<class T>
 Rank Vector<T>::find(T const& e) const {
 	return find(e, 0, _size);
+}
+
+template<class T>
+void Vector<T>::bubbleSort(Rank lo, Rank hi) {
+	while (lo < (hi = bubble(lo, hi)));
+}
+
+template<class T>
+void Vector<T>::bubbleSort() {
+	bubbleSort(0, _size);
 }
