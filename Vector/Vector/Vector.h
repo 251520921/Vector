@@ -20,15 +20,18 @@ public:
 	Vector(Vector<T> const& V);
 	~Vector();
 
+	Vector<T>& operator=(Vector<T> const& rhs);
+	T& operator[](Rank r);
+	operator T* () const;
+
 	Rank insert(T const& e, Rank r);	//插入一个数据
 	Rank insert(T const& e);
 	int remove(Rank lo, Rank hi);
 	T remove(Rank r);
 
-	Vector<T>& operator=(Vector<T> const& rhs);
-	T& operator[](Rank r);
-	operator T* () const;
-
+	//无序向量
+	Rank find(T const& e, Rank lo, Rank hi) const;
+	Rank find(T const& e) const;
 };
 
 template<class T>
@@ -95,6 +98,23 @@ Vector<T>::~Vector() {
 }
 
 template<class T>
+Vector<T>& Vector<T>::operator=(Vector<T> const& rhs) {
+	if (_elem) delete[] _elem;
+	copyFrom(rhs._elem, 0, rhs._size);
+	return *this;
+}
+
+template<class T>
+T& Vector<T>::operator[](Rank r) {
+	return _elem[r];
+}
+
+template<class T>
+Vector<T>::operator T* () const {
+	return _elem;
+}
+
+template<class T>
 Rank Vector<T>::insert(T const& e, Rank r) {
 	assert(r >= 0 && r <= _size);
 	expand();
@@ -130,18 +150,14 @@ T Vector<T>::remove(Rank r) {
 }
 
 template<class T>
-Vector<T>& Vector<T>::operator=(Vector<T> const& rhs) {
-	if (_elem) delete[] _elem;
-	copyFrom(rhs._elem, 0, rhs._size);
-	return *this;
+Rank Vector<T>::find(T const& e, Rank lo, Rank hi) const {
+	assert(lo < hi);
+	if (hi > _size) hi = _size;
+	while (lo < hi-- && e != _elem[hi]);
+	return hi;
 }
 
 template<class T>
-T& Vector<T>::operator[](Rank r) {
-	return _elem[r];
-}
-
-template<class T>
-Vector<T>::operator T* () const {
-	return _elem;
+Rank Vector<T>::find(T const& e) const {
+	return find(e, 0, _size);
 }

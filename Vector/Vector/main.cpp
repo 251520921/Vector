@@ -3,14 +3,15 @@
 
 int main() {
 	Vector<int> v1;
-	Vector<int> v2(3, 5, 100);
-	Vector<int> v3(v2);
+	v1.insert(0);
+	v1.insert(1);
+	v1.insert(2);
+	v1.insert(3);
+	v1.insert(4);
+	v1.insert(5);
 
-	v3.insert(101, 0);
-	v3.insert(120, 0);
-	v3.insert(121);
-	v3.insert(167);
-	v3.insert(188);
 
-	v3.remove(0, 100);
+	int r = v1.find(1);
+	std::cout << r << std::endl;
+	return 0;
 }
