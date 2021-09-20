@@ -35,6 +35,7 @@ public:
 	//Œﬁ–ÚœÚ¡ø
 	Rank find(T const& e, Rank lo, Rank hi) const;
 	Rank find(T const& e) const;
+	int duplicate();
 	//≈≈–Ú
 	void bubbleSort(Rank lo, Rank hi);
 	void bubbleSort();
@@ -193,6 +194,15 @@ Rank Vector<T>::find(T const& e, Rank lo, Rank hi) const {
 template<class T>
 Rank Vector<T>::find(T const& e) const {
 	return find(e, 0, _size);
+}
+
+template<class T>
+int Vector<T>::duplicate() {
+	int oldSize = _size;
+	int i = 1;
+	while(i < _size)
+		(find(_elem[i], 0, i) < 0) ? i++ : remove(i);
+	return oldSize - _size;
 }
 
 template<class T>
