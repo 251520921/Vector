@@ -12,7 +12,7 @@ int main() {
 	v1.insert(6);
 	v1.insert(7);
 
-	v1.bubbleSort();
+	v1.mergeSort();
 	int r = v1.find(1);
 	std::cout << r << std::endl;
 	return 0;

@@ -13,6 +13,7 @@ private:
 	void expand();
 	void shrink();
 	Rank bubble(Rank lo, Rank hi);
+	void merge(Rank lo, Rank mi, Rank hi);
 
 public:
 	Vector(int s = 0, int c = DEFAULT_CAPACITY, T const& e = NULL);
@@ -37,6 +38,8 @@ public:
 	//排序
 	void bubbleSort(Rank lo, Rank hi);
 	void bubbleSort();
+	void mergeSort(Rank lo, Rank hi);
+	void mergeSort();
 };
 
 template<class T>
@@ -78,6 +81,20 @@ Rank Vector<T>::bubble(Rank lo, Rank hi) {
 			std::swap(_elem[lo - 1], _elem[lo]);//main函数里包含了iosteram
 		}
 	return last;
+}
+
+template<class T>
+void Vector<T>::merge(Rank lo, Rank mi, Rank hi) {
+	Rank i = 0; T* A = _elem + lo;
+	Rank j = 0; int lb = mi - lo; T* B = new T[lb];
+	for (Rank i = 0; i < lb; i++) B[i] = A[i];
+	Rank k = 0; int lc = hi - mi; T* C = _elem + mi;
+	while ((j < lb) && (k < lc))
+		A[i++] = (B[j] <= C[k]) ? B[j++] : C[k++];
+	while (j < lb)
+		A[i++] = B[j++];
+	delete[] B;
+	
 }
 
 template<class T>
@@ -186,4 +203,20 @@ void Vector<T>::bubbleSort(Rank lo, Rank hi) {
 template<class T>
 void Vector<T>::bubbleSort() {
 	bubbleSort(0, _size);
+}
+
+template<class T>
+void Vector<T>::mergeSort(Rank lo, Rank hi) {
+	assert(lo >= 0 && lo < hi);
+	if (hi > _size) hi = _size;
+	if (hi - lo < 2) return;
+	int mi = (lo + hi) / 2;
+	mergeSort(lo, mi);
+	mergeSort(mi, hi);
+	merge(lo, mi, hi);
+}
+
+template<class T>
+void Vector<T>::mergeSort() {
+	mergeSort(0, _size);
 }
