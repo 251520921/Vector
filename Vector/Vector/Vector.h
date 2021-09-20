@@ -41,6 +41,8 @@ public:
 	void bubbleSort();
 	void mergeSort(Rank lo, Rank hi);
 	void mergeSort();
+
+	int uniquify();
 };
 
 template<class T>
@@ -202,6 +204,7 @@ int Vector<T>::duplicate() {
 	int i = 1;
 	while(i < _size)
 		(find(_elem[i], 0, i) < 0) ? i++ : remove(i);
+	shrink();
 	return oldSize - _size;
 }
 
@@ -229,4 +232,14 @@ void Vector<T>::mergeSort(Rank lo, Rank hi) {
 template<class T>
 void Vector<T>::mergeSort() {
 	mergeSort(0, _size);
+}
+
+template<class T>
+int Vector<T>::uniquify() {
+	Rank i = 0; Rank j = 0;
+	while (++j < _size)
+		if (_elem[i] != _elem[j]) _elem[++i] = _elem[j];
+	_size = ++i;
+	shrink();
+	return j - i;
 }

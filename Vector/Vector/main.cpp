@@ -12,7 +12,8 @@ int main() {
 	v1.insert(4);
 	v1.insert(1);
 
-	v1.duplicate();
+	v1.bubbleSort();
+	v1.uniquify();
 	int r = v1.find(1);
 	std::cout << r << std::endl;
 	return 0;
