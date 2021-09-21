@@ -41,8 +41,13 @@ public:
 	void bubbleSort();
 	void mergeSort(Rank lo, Rank hi);
 	void mergeSort();
-
+	//»•÷ÿ
 	int uniquify();
+	//≤È’“
+	Rank binSerachA(T const& e, Rank lo, Rank hi) const;
+	Rank binSerachA(T const& e) const;
+	Rank binSerachB(T const& e, Rank lo, Rank hi) const;
+	Rank binSerachB(T const& e) const;
 };
 
 template<class T>
@@ -242,4 +247,38 @@ int Vector<T>::uniquify() {
 	_size = ++i;
 	shrink();
 	return j - i;
+}
+
+template<class T>
+Rank Vector<T>::binSerachA(T const& e, Rank lo, Rank hi) const {
+	assert(lo >= 0 && hi <= _size);
+	while (lo < hi)
+	{
+		Rank mi = (lo + hi) >> 1;
+		if (e < _elem[mi]) hi = mi;
+		else if (_elem[mi] < e) lo = mi + 1;
+		else if (_elem[mi] == e) return mi;
+	}
+	return -1;
+}
+
+template<class T>
+Rank Vector<T>::binSerachA(T const& e) const {
+	return binSerach(e, 0, _size);
+}
+
+template<class T>
+Rank Vector<T>::binSerachB(T const& e, Rank lo, Rank hi) const {
+	assert(lo >= 0 && hi <= _size);
+	Rank mi;
+	while (lo < hi) {
+		 mi = (lo + hi) >> 1;
+		(e < _elem[mi]) ? hi = mi : lo = mi + 1;
+	}
+	return --lo;
+}
+
+template<class T>
+Rank Vector<T>::binSerachB(T const& e) const {
+	return binSerachB(e, 0, _size);
 }

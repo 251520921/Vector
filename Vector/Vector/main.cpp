@@ -11,10 +11,13 @@ int main() {
 	v1.insert(3,0);
 	v1.insert(4);
 	v1.insert(1);
+	v1.insert(8);
+	v1.insert(7);
+	v1.insert(6);
 
 	v1.bubbleSort();
 	v1.uniquify();
-	int r = v1.find(1);
+	int r = v1.binSerachB(-5);
 	std::cout << r << std::endl;
 	return 0;
 }
