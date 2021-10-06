@@ -32,6 +32,8 @@ public:
 	int remove(Rank lo, Rank hi);
 	T remove(Rank r);
 
+	int clear();		//清空
+
 	//无序向量
 	Rank find(T const& e, Rank lo, Rank hi) const;
 	Rank find(T const& e) const;
@@ -188,6 +190,16 @@ T Vector<T>::remove(Rank r) {
 	T t = _elem[r];
 	remove(r, r + 1);
 	return t;
+}
+
+template<class T>
+int Vector<T>::clear() {
+	int oldSize = _size;
+	T* oldElem = _elem;
+	_elem = new T[_capacity = DEFAULT_CAPACITY];
+	delete[] oldElem;
+	_size = 0;
+	return oldSize;
 }
 
 template<class T>
